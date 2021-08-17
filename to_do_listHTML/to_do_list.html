@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang ="pt-br">
+    <head>
+        <link rel="stylesheet" type="text/css" href="style.css" media="screen">
+        <meta charset="UTF-8">
+        <meta  name="viewport" content="width = device-width, initial-scale = 1.0"
+        <title> </title>
+    </head>
+    <body>
+        
+        <center>
+            <div class="row">
+                <div class="col-12">
+                    <form>
+                        <h2 id="text0">TAREFAS A FAZER(TO DO APP)</h2>
+                        <br>
+                        <h4 id="text1">Adicione texto dentro da caixa de texto para inserir novas atividades.</h4>
+                        <h4 id="text2">Clique no item para marcar a atividade como completada.</h4>
+                        <h4 id="text3">Clique no "X" da atividade para remover o item.</h4>
+                        <br>
+                        <div>
+                            <input type="text" name = "task" id="task" placeholder="Nova tarefa..."> <input type="button" name="btn" id="btn" value= Adicionar onclick="javascript:AddTask()">
+                        </div>        
+                        <br>
+                    </form>
+                </div>
+            </div>        
+        </center>
+
+        
+        <!--Lista de adicionados-->
+        <div class="row">
+            <div class="col-12">
+                <div class="to_do_List">
+                    <ul id="lista" class="checked">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!--Funcoes da lista-->
+        <script type="text/javascript">
+                 
+            var ul = document.getElementById("lista");
+            var li;
+            var itemId;
+            var item;
+
+            AddTask = function(){
+                if(document.getElementById("task").value != ""){
+                    
+                    item = document.getElementById("task");
+
+                    itemId = ul.childElementCount;
+
+                    li = createItemEl(item.value, itemId);
+
+                    li.appendChild(createRemoveTaskBtn(itemId));
+
+                    ul.appendChild(li);
+                    
+                    
+                    item.value = "";
+
+                }
+            }
+
+            removeTask = function(itemId){
+                for (i=0;i<ul.children.length;i++){
+                    if(ul.children[i].getAttribute("index") == itemId){
+                        ul.children[i].remove();
+                    }
+                }
+            }
+
+            createItemEl = function(itemValue, itemId){
+                let li = document.createElement("li");
+                li.setAttribute("index", itemId);
+                li.appendChild(document.createTextNode(itemValue));
+                return li;
+            }
+
+            createRemoveTaskBtn = function(itemId){
+                let btn = document.createElement("button");
+                btn.setAttribute("onclick", "removeTask("+itemId+")");
+                btn.innerHTML = "X";
+                return btn;
+            }
+
+            
+        </script>
+
+<!--Funcao enter-->
+
+        <script>
+            var input = document.getElementById("task");
+            input.addEventListener("keypress", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    document.getElementById("btn").click();
+                }
+            });
+        </script>
+
+
+    </body>
+
+</html>
